@@ -1,5 +1,4 @@
 package com.coderscampus.recipes.service;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -8,18 +7,24 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderscampus.recipes.config.ApplicationProperties;
 import com.coderscampus.recipes.domain.Recipe;
 
 @Service
 public class RecipeFileService {
 
+	@Autowired
+	ApplicationProperties appProperties;
+
 	public List<Recipe> readCSV() throws IOException {
+		
 		List<Recipe> recipes = new ArrayList<>();
 		try {
 
-			Reader in = new FileReader("recipes.txt");
+			Reader in = new FileReader(appProperties.getRecipesFilename());
 			Iterable<CSVRecord> records = CSVFormat.DEFAULT.withIgnoreSurroundingSpaces().withFirstRecordAsHeader()
 					.withEscape('\\').withTrim().parse(in);
 			for (CSVRecord record : records) {

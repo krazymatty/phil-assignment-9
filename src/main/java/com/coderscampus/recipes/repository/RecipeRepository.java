@@ -9,28 +9,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.coderscampus.recipes.domain.Recipe;
+import com.coderscampus.recipes.repository.impl.RecipeRepositoryImpl;
 import com.coderscampus.recipes.service.RecipeFileService;
 
 @Repository
-public class RecipeRepository {
+public class RecipeRepository implements RecipeRepositoryImpl {
 
-	@Autowired
-	private RecipeFileService fileService;
-	
-    public List<String> filterBy(Predicate<Recipe> filter) throws IOException {
-        return fileService.readCSV().stream()
-                .filter(filter)
-                .map(Recipe::getTitle)
-                .sorted()
-                .peek(System.out::println)
-                .collect(Collectors.toList());
-    }
+    @Autowired
+    private RecipeFileService fileService;
     
-    public List<String> allRecipes() throws IOException {
+    @Override
+    public List<String> filterBy(Predicate<Recipe> predicate) throws IOException {
         return fileService.readCSV().stream()
+                .filter(predicate)
                 .map(Recipe::getTitle)
                 .sorted()
-                .peek(System.out::println)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<Recipe> allRecipes() throws IOException {
+        return fileService.readCSV().stream()
+        		.sorted((r1, r2) -> r1.getTitle().compareTo(r2.getTitle()))
+                .collect(Collectors.toList());
+    }
+
+	@Override
+	public String home() throws IOException {
+		return "Recipe Home Page";
+	}
+	@Override
+	public List<Recipe> returnRecipe(Predicate<Recipe> predicate) throws IOException {
+        return fileService.readCSV().stream()
+                .filter(predicate)
+                .sorted((r1, r2) -> r1.getTitle().compareTo(r2.getTitle()))
+                .collect(Collectors.toList());
+
+	}
+
 }
+

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coderscampus.recipes.domain.Recipe;
 import com.coderscampus.recipes.repository.RecipeRepository;
 
 @RestController
@@ -16,30 +17,30 @@ public class RecipeController {
 	private RecipeRepository recipeRepository;
 
 	@GetMapping("/gluten-free")
-	public List<String> glutenFree() throws IOException {
-		return recipeRepository.filterBy(recipe -> recipe.getGlutenFree());
+	public List<Recipe> glutenFree() throws IOException {
+		return recipeRepository.returnRecipe(recipe -> recipe.getVegan());
 	}
 
 	@GetMapping("/vegan")
-	public List<String> vegan() throws IOException {
-		return recipeRepository.filterBy(recipe -> recipe.getVegan());
+	public List<Recipe> vegan() throws IOException {
+		return recipeRepository.returnRecipe(recipe -> recipe.getVegan());
 	}
 
 	@GetMapping("/vegan-and-gluten-free")
-	public List<String> veganAndGlutenFree() throws IOException {
-		return recipeRepository.filterBy(recipe -> recipe.getVegan() && recipe.getGlutenFree());
+	public List<Recipe> veganAndGlutenFree() throws IOException {
+		return recipeRepository.returnRecipe(recipe -> recipe.getVegan() && recipe.getGlutenFree());
 	}
 
 	@GetMapping("/vegetarian")
-	public List<String> vegetarian() throws IOException {
-		return recipeRepository.filterBy(recipe -> recipe.getVegetarian());
+	public List<Recipe> vegetarian() throws IOException {
+		return recipeRepository.returnRecipe(recipe -> recipe.getVegetarian());
 	}
-	
+
 	@GetMapping("/all-recipes")
-	public List<String> allRecipes() throws IOException {
+	public List<Recipe> allRecipes() throws IOException {
 		return recipeRepository.allRecipes();
 	}
-	
+
 	@GetMapping("/")
 	public String home() {
 		return "Recipe Home Page";
