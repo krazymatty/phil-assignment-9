@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "file")
-public class ApplicationProperties {
+public class ApplicationPropertiesConfiguration {
   
   private String recipesFilename;
   

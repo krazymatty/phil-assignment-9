@@ -10,14 +10,14 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderscampus.recipes.config.ApplicationProperties;
+import com.coderscampus.recipes.config.ApplicationPropertiesConfiguration;
 import com.coderscampus.recipes.domain.Recipe;
 
 @Service
 public class RecipeFileService {
 
 	@Autowired
-	ApplicationProperties appProperties;
+	ApplicationPropertiesConfiguration appProperties;
 
 	public List<Recipe> readCSV() throws IOException {
 		
