@@ -18,7 +18,7 @@ public class RecipeController {
 
 	@GetMapping("/gluten-free")
 	public List<Recipe> glutenFree() throws IOException {
-		return recipeRepository.returnRecipe(recipe -> recipe.getVegan());
+		return recipeRepository.returnRecipe(recipe -> recipe.getGlutenFree());
 	}
 
 	@GetMapping("/vegan")
